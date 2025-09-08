@@ -58,6 +58,37 @@ pipeline {
                 }
             }
         }
+
+    stage("Deploy To Dev Server") {
+            when {
+                expression { return env.BRANCH_NAME == 'feature-login' }
+            }
+            steps {
+                sshagent(['Tomcat_Server1']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ec2-user@${TOMCAT_SERVER_IP} sudo systemctl stop tomcat
+                        echo "Stopping the Tomcat Process"
+                        sleep 30
+                        scp -o StrictHostKeyChecking=no target/student-reg-webapp.war ec2-user@${TOMCAT_SERVER_IP}:/opt/tomcat/webapps/student-reg-webapp.war
+                        echo "Copying the War file to Tomcat Process"
+                        ssh -o StrictHostKeyChecking=no ec2-user@${TOMCAT_SERVER_IP} sudo systemctl start tomcat
+                        echo "Starting the Tomcat Process"
+                    """
+                }
+            }
+        }
+
+stage("Deploy To QA Server") {
+            when {
+                expression { return env.BRANCH_NAME == 'main' }
+            }
+            steps {
+                sshagent(['Tomcat_Server1']) {
+                    sh "echo 'Deploying to QA Server...'"
+                }
+            }
+        }
+
     }
 
     post {
