@@ -45,7 +45,7 @@ pipeline {
                 expression { return env.BRANCH_NAME == 'development' }
             }
             steps {
-                sshagent(['Tomcat_Server']) {
+                sshagent(['Tomcat_Server1']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ec2-user@${TOMCAT_SERVER_IP} sudo systemctl stop tomcat
                         echo "Stopping the Tomcat Process"
