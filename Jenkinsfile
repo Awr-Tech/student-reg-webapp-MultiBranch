@@ -13,7 +13,7 @@ pipeline {
     }
     
     environment {
-        SONARQUBE_URL = "http://13.57.206.25:9000"
+        SONARQUBE_URL = "http://3.110.218.113:9000"
         SONAR_QUBE_TOKEN = credentials('SonarToken')
         TOMCAT_SERVER_IP = "172.31.21.97"
     }
@@ -44,27 +44,20 @@ pipeline {
       }
       
        stage("Deployt To Dev Server") {
-        when {
-            expression {
-                return env.BRANCH_NAME == 'development'
-            }
-        }
-        steps{
-    
-            sshagent(['Tomcat_Server']) {
+        steps {
+            when {
+                branch: 'development'
+             sshagent(['Tomcat_Server']) {
                 sh """
                      ssh -o  StrictHostKeyChecking=no ec2-user@${TOMCAT_SERVER_IP} sudo systemctl stop tomcat
-                     echo Stoping the Tomcat Process
+                     echo Stoping the Tomcat Process"
                      sleep 30
                      scp -o  StrictHostKeyChecking=no target/student-reg-webapp.war ec2-user@${TOMCAT_SERVER_IP}:/opt/tomcat/webapps/student-reg-webapp.war
-                     echo Copying the War file to Tomcat Server
-                     ssh -o  StrictHostKeyChecking=no ec2-user@${TOMCAT_SERVER_IP} sudo systemctl start tomcat
-                     echo Strating the Tomcat process
+                     echo Copying the War file to Tomcat Process"
                    """
-            }
         }
-      }
-      
+        }
+       }  
        
    }
    
