@@ -42,7 +42,7 @@ pipeline {
 
         stage("Deploy To Dev Server") {
             when {
-                branch 'development'
+                branch: 'development'
             }
             steps {
                 sshagent(['Tomcat_Server']) {
@@ -52,6 +52,8 @@ pipeline {
                         sleep 30
                         scp -o StrictHostKeyChecking=no target/student-reg-webapp.war ec2-user@${TOMCAT_SERVER_IP}:/opt/tomcat/webapps/student-reg-webapp.war
                         echo "Copying the War file to Tomcat Process"
+                        ssh -o StrictHostKeyChecking=no ec2-user@${TOMCAT_SERVER_IP} sudo systemctl start tomcat
+                        echo "Starting the Tomcat Process"
                     """
                 }
             }
