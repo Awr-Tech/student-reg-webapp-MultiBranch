@@ -24,11 +24,11 @@
     <distributionManagement>
 		<repository>
 			<id>nexus</id>
-			<url>http://43.204.32.248:8081/repository/student-reg-webapp/</url>
+			<url>http://43.204.32.248:8081/repository/student-reg-multibranch-release/</url>
 		</repository>
 		<snapshotRepository>
 			<id>nexus</id>
-			<url>http://43.204.32.248:8081/repository/student-reg-appp-snapshots/</url>
+			<url>http://43.204.32.248:8081/repository/student-reg-multibranch-snapshots/</url>
 		</snapshotRepository>
     </distributionManagement>
 
