@@ -13,7 +13,7 @@ pipeline {
 
     environment {
         SONARQUBE_URL = "http://3.110.218.113:9000"
-        SONAR_QUBE_TOKEN = credentials('SonarToken')
+        SONAR_QUBE_TOKEN = credentials('Sonar_Token')
         TOMCAT_SERVER_IP = "172.31.6.60"
     }
 
