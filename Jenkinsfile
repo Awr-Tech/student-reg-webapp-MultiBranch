@@ -42,7 +42,7 @@ pipeline {
 
         stage("Deploy To Dev Server") {
             when {
-                branch: 'development'
+                branch 'development'
             }
             steps {
                 sshagent(['Tomcat_Server']) {
